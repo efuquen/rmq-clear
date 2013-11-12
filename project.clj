@@ -3,4 +3,5 @@
   :url "http://parascal.com"
   :license {:name "Apache License, Version 2.0"
             :url "http://www.apache.org/licenses/LICENSE-2.0.html"}
-  :dependencies [[org.clojure/clojure "1.5.1"] [com.novemberain/langohr "1.4.1"]])
+  :dependencies [[org.clojure/clojure "1.5.1"] [com.novemberain/langohr "1.4.1"]]
+  :main com.gettyimages.dsa.core)

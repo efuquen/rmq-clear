@@ -1,5 +1,5 @@
 (ns com.gettyimages.dsa.core
-    (:gen-class)
+    (:gen-class :main true)
     (:require [langohr.core      :as rmq]
               [langohr.channel   :as lch]
               [langohr.queue     :as lq]
@@ -23,9 +23,15 @@
   (let [config (read-edn-file config-file)
         conn (rmq/connect config)
         ch (lch/open conn)]
-    (lc/subscribe ch qname message-handler :auto-ack true)
-    (Thread/sleep sleep-time)
-    (println "[main] Disconnecting...")
-    (rmq/close ch)
-    (rmq/close conn)
+  (try 
+    (do
+      (lc/subscribe ch qname message-handler :auto-ack true)
+      (println (str "[main] Sleep ", sleep-time))
+      (Thread/sleep (Integer/parseInt sleep-time))
+      (println "[main] Disconnecting...")
+    )
+    (finally
+      (rmq/close ch)
+      (rmq/close conn)
+  ))
 ))
