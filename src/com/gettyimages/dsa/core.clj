@@ -19,13 +19,12 @@
 ))
 
 (defn -main
-  [config-file & args]
+  [config-file qname sleep-time & args]
   (let [config (read-edn-file config-file)
         conn (rmq/connect config)
-        ch (lch/open conn)
-        qname "dsa-metadata"]
+        ch (lch/open conn)]
     (lc/subscribe ch qname message-handler :auto-ack true)
-    (Thread/sleep 2000)
+    (Thread/sleep sleep-time)
     (println "[main] Disconnecting...")
     (rmq/close ch)
     (rmq/close conn)
